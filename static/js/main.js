@@ -1,11 +1,9 @@
-// Script performático e minimalista
 document.addEventListener("DOMContentLoaded", function () {
-  // Gerenciamento do tema (claro/escuro) com cookies em vez de localStorage
   const htmlElement = document.documentElement;
   const themeToggle = document.getElementById("themeToggle");
   const themeToggleMobile = document.getElementById("themeToggleMobile");
 
-  // Função para obter valor de cookie
+  // obtêm valor de cookie
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -13,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return null;
   }
 
-  // Função para definir cookie
+  // definir cookie
   function setCookie(name, value, days) {
     const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -21,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
   }
 
-  // Verificar preferência do usuário ou definir padrão
+  // Verificar preferência
   const savedTheme = getCookie("theme") || "light";
   htmlElement.setAttribute("data-theme", savedTheme);
   updateThemeIcon(savedTheme);
 
-  // Função para alternar o tema
+  // Alternar o tema
   function toggleTheme() {
     const currentTheme = htmlElement.getAttribute("data-theme");
     const newTheme = currentTheme === "light" ? "dark" : "light";
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setCookie("theme", newTheme, 365); // Cookie válido por 1 ano
     updateThemeIcon(newTheme);
 
-    // Enviar a preferência para o backend (opcional)
     fetch("/theme", {
       method: "POST",
       headers: {
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ theme: newTheme }),
     }).catch((error) => {
-      // Silenciosamente ignorar erro (o site ainda funcionará)
       console.error("Erro ao salvar preferência:", error);
     });
   }
@@ -55,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
     themeToggleMobile.innerHTML = icon;
   }
 
-  // Adicionar event listeners aos botões de tema
+  // event listeners
   themeToggle.addEventListener("click", toggleTheme);
   themeToggleMobile.addEventListener("click", toggleTheme);
 
-  // Rolagem suave para links internos
+  // Rolagem suave
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       e.preventDefault();
@@ -91,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
       imageObserver.observe(img);
     });
   } else {
-    // Fallback para navegadores que não suportam IntersectionObserver
+    // Fallback navegadores que não suportam IntersectionObserver
     lazyImages.forEach((img) => {
       img.classList.add("loaded");
     });
@@ -103,10 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // Aqui seria implementada a lógica de envio para o backend Python
       const formData = new FormData(this);
 
-      // Exemplo de como seria o envio para um endpoint Python
       console.log(
         "Enviando dados para o backend Python:",
         Object.fromEntries(formData.entries())
@@ -118,16 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Implementação de tratativa de falha em cookie
-  // Backup caso haja problemas com cookies
   try {
-    // Testando se podemos definir e ler cookies
     setCookie("test-cookie", "test", 1);
     getCookie("test-cookie");
   } catch (e) {
     console.warn("Cookies não disponíveis, alternando para abordagem básica");
 
-    // Implementação alternativa sem depender de cookies
     themeToggle.addEventListener("click", function () {
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";

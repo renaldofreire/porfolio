@@ -1,7 +1,7 @@
 # Portfólio Minimalista
 
 ## Tecnologias
-- Python no backp-end
+- Python no back-end
 - HTML, CSS e JS no front-end
 
 ## Foco

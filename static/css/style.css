@@ -67,6 +67,21 @@ nav {
   padding: 1rem 0;
 }
 
+.menu-btn {
+  display: none;
+  color: var(--bg-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+#themeToggleMobile {
+  display: none; /* Esconde o botão de tema específico para mobile */
+}
+
 .logo {
   font-weight: bold;
   font-size: 1.5rem;
@@ -324,6 +339,15 @@ footer {
   .nav-links {
     display: none;
   }
+
+  .menu-btn {
+    display: block;
+}
+
+#themeToggleMobile {
+  display: flex;
+  margin-left: auto;
+}
 
   /* Menu mobile - seria implementado com JavaScript */
   .menu-btn {
